@@ -3,7 +3,6 @@ import sqlite3, os
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-# key used to sign session cookies
 app.secret_key = os.environ.get("SECRET_KEY", "foodona-development-secret")
 DB = os.path.join(os.path.dirname(__file__), "foodona.db")
 
