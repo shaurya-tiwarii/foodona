@@ -1,5 +1,5 @@
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4fff8;color:#173b28}
-nav{padding:18px 7%;display:flex;justify-content:space-between;background:#fff;box-shadow:0 2px 14px #0001}
+nav{padding:16px 7%;display:flex;justify-content:space-between;background:#fff;box-shadow:0 2px 14px #0001}
 a{color:#148a4b;text-decoration:none}.container{max-width:1050px;margin:45px auto;padding:20px}
 .card{background:#fff;border-radius:18px;padding:24px;margin:18px 0;box-shadow:0 8px 30px #0000000d}
 input,select{width:100%;padding:12px;margin:7px 0 15px;border:1px solid #cce8d7;border-radius:10px}
