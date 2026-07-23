@@ -56,5 +56,20 @@ def register():
         finally: con.close()
     return render_template("register.html")
 
+@app.route("/login", methods=["GET","POST"])
+def login():
+    if request.method=="POST":
+        con=db(); u=con.execute("SELECT * FROM users WHERE email=?",(request.form["email"].lower(),)).fetchone()
+        con.close()
+        if u and check_password_hash(u["password"],request.form["password"]):
+            session.update(user_id=u["id"],name=u["name"],role=u["role"])
+            return redirect(url_for("dashboard"))
+        flash("Invalid email or password.")
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.clear(); return redirect(url_for("index"))
+
 if __name__=="__main__":
     init_db(); app.run(debug=True)
