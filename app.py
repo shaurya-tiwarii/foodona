@@ -39,5 +39,22 @@ def init_db():
 def index():
     return render_template("index.html")
 
+@app.route("/register", methods=["GET","POST"])
+def register():
+    if request.method == "POST":
+        name=request.form["name"].strip(); email=request.form["email"].strip().lower()
+        pw=request.form["password"]; role=request.form["role"]
+        con=db()
+        try:
+            cur=con.execute("INSERT INTO users(name,email,password,role) VALUES(?,?,?,?)",
+                            (name,email,generate_password_hash(pw),role))
+            con.commit()
+            session["user_id"]=cur.lastrowid; session["name"]=name; session["role"]=role
+            return redirect(url_for("dashboard"))
+        except sqlite3.IntegrityError:
+            flash("Email already registered.")
+        finally: con.close()
+    return render_template("register.html")
+
 if __name__=="__main__":
     init_db(); app.run(debug=True)
