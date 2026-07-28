@@ -108,6 +108,7 @@ def accept(donation_id):
     return redirect(url_for("dashboard"))
 
 @app.route("/status/<int:donation_id>/<status>",methods=["POST"])
+# move a donation along: accepted -> collected -> delivered
 def status(donation_id,status):
     if status not in {"Collected","Delivered"}: return redirect(url_for("dashboard"))
     con=db(); con.execute("UPDATE donations SET status=? WHERE id=?",(status,donation_id)); con.commit(); con.close()
