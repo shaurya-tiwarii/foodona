@@ -105,7 +105,13 @@ def accept(donation_id):
     if "user_id" not in session or session["role"]!="Recipient": return redirect(url_for("login"))
     con=db(); con.execute("UPDATE donations SET recipient_id=?,status='Accepted' WHERE id=? AND status='Pending'",
         (session["user_id"],donation_id)); con.commit(); con.close()
-    flash("Donation accepted."); return redirect(url_for("dashboard"))
+    return redirect(url_for("dashboard"))
+
+@app.route("/status/<int:donation_id>/<status>",methods=["POST"])
+def status(donation_id,status):
+    if status not in {"Collected","Delivered"}: return redirect(url_for("dashboard"))
+    con=db(); con.execute("UPDATE donations SET status=? WHERE id=?",(status,donation_id)); con.commit(); con.close()
+    return redirect(url_for("dashboard"))
 
 if __name__=="__main__":
     init_db(); app.run(debug=True)
