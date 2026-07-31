@@ -109,9 +109,9 @@ def accept(donation_id):
 
 @app.route("/status/<int:donation_id>/<status>",methods=["POST"])
 def status(donation_id,status):
-    if "user_id" not in session: flash("Please login first."); return redirect(url_for("login"))
+    if "user_id" not in session: return redirect(url_for("login"))
     if status not in {"Collected","Delivered"}: return redirect(url_for("dashboard"))
-    con=db(); con.execute("UPDATE donations SET status=? WHERE id=?",(status,donation_id)); con.commit(); con.close()
+    con=db(); con.execute("UPDATE donations SET status=? WHERE id=? AND recipient_id=?",(status,donation_id,session["user_id"])); con.commit(); con.close()
     return redirect(url_for("dashboard"))
 
 if __name__=="__main__":
