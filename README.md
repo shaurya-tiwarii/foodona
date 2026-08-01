@@ -1,6 +1,6 @@
 # FOODONA
 
-Food donation web app built with Flask.
+Food donation web app built with Flask and SQLite.
 
 ## Run
 ```
